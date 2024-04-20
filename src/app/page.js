@@ -1,14 +1,15 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react';
-import { generateDummyData } from '../utils/dummyData';
-import Pagination from '../components/Pagination';
+import React, { useState } from "react";
+import { generateDummyData } from "../utils/dummyData";
+import Pagination from "../components/Pagination";
 
-const ITEMS_PER_PAGE_OPTIONS = [5, 10, 15, 20]; 
+const ITEMS_PER_PAGE_OPTIONS = [5, 10, 15, 20];
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(ITEMS_PER_PAGE_OPTIONS[1]); 
+  const [model , setModel] = useState(false);
+  const [itemsPerPage, setItemsPerPage] = useState(ITEMS_PER_PAGE_OPTIONS[1]);
   const dummyData = generateDummyData();
 
   const totalItems = dummyData.length;
@@ -20,7 +21,7 @@ const Home = () => {
 
   const handleItemsPerPageChange = (value) => {
     setItemsPerPage(value);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const getPageData = () => {
@@ -30,8 +31,30 @@ const Home = () => {
   };
 
   return (
+    <>
+    {model && <SearchModel />}
     <div className="container mx-auto pt-10 pb-10 flex flex-col justify-center">
-      <h1 className="text-2xl font-bold mb-4">Reports</h1>
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-bold mb-4">Reports</h1>
+        <div className="flex gap-4">
+          <div className="border p-2 rounded-lg flex justify-center hover:bg-gray-200"
+            onClick={() => setModel(true)}
+          >
+            <svg
+              className="w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <path d="M3.9 54.9C10.5 40.9 24.5 32 40 32H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z" />
+            </svg>
+          </div>
+          <div className="border p-2 rounded-lg flex justify-center hover:bg-gray-200">
+            <svg className="w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />
+            </svg>
+          </div>
+        </div>
+      </div>
       <div className="mb-4">
         <table className="w-full border-collapse border border-gray-200">
           <thead>
@@ -80,21 +103,35 @@ const Home = () => {
         onItemsPerPageChange={handleItemsPerPageChange}
       />
       <div className="flex mb-2">
-          <span className="mr-2">Items per page:</span>
-          <select
-            value={itemsPerPage}
-            onChange={(e) => handleItemsPerPageChange(parseInt(e.target.value))}
-            className="px-2 py-1 border rounded-md text-sm"
-          >
-            {ITEMS_PER_PAGE_OPTIONS.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
+        <span className="mr-2">Items per page:</span>
+        <select
+          value={itemsPerPage}
+          onChange={(e) => handleItemsPerPageChange(parseInt(e.target.value))}
+          className="px-2 py-1 border rounded-md text-sm"
+        >
+          {ITEMS_PER_PAGE_OPTIONS.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
+    </>
   );
 };
+
+
+const SearchModel = () =>{
+  return(
+    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white p-4 rounded-lg">
+        <h1 className="text-2xl font-bold mb-4">Search</h1>
+        <input type="text" className="border p-2 rounded-lg w-full mb-4" placeholder="Search here" />
+        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">Search</button>
+      </div>
+    </div>
+  )
+}
 
 export default Home;
