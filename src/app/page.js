@@ -4,27 +4,33 @@ import React, { useState } from 'react';
 import { generateDummyData } from '../utils/dummyData';
 import Pagination from '../components/Pagination';
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE_OPTIONS = [5, 10, 15, 20]; 
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(ITEMS_PER_PAGE_OPTIONS[1]); 
   const dummyData = generateDummyData();
 
   const totalItems = dummyData.length;
-  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
+  const handleItemsPerPageChange = (value) => {
+    setItemsPerPage(value);
+    setCurrentPage(1); 
+  };
+
   const getPageData = () => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
     return dummyData.slice(startIndex, endIndex);
   };
 
   return (
-    <div className="container mx-auto flex flex-col h-screen justify-center">
+    <div className="container mx-auto pt-10 pb-10 flex flex-col justify-center">
       <h1 className="text-2xl font-bold mb-4">Reports</h1>
       <div className="mb-4">
         <table className="w-full border-collapse border border-gray-200">
@@ -70,7 +76,23 @@ const Home = () => {
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
+        itemsPerPage={itemsPerPage}
+        onItemsPerPageChange={handleItemsPerPageChange}
       />
+      <div className="flex mb-2">
+          <span className="mr-2">Items per page:</span>
+          <select
+            value={itemsPerPage}
+            onChange={(e) => handleItemsPerPageChange(parseInt(e.target.value))}
+            className="px-2 py-1 border rounded-md text-sm"
+          >
+            {ITEMS_PER_PAGE_OPTIONS.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
     </div>
   );
 };
