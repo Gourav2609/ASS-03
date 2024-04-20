@@ -1,5 +1,6 @@
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
+import Link from "next/link";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const handleClick = (page) => {
@@ -12,19 +13,21 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     if (totalPages <= 5) {
       for (let i = 1; i <= totalPages; i++) {
         paginationItems.push(
-          <a
-            key={i}
-            onClick={() => handleClick(i)}
-            className={classNames(
-              'px-3 py-2 rounded-md text-sm font-medium',
-              {
-                'bg-blue-600 text-white': currentPage === i,
-                'text-gray-700 hover:bg-gray-100': currentPage !== i,
-              }
-            )}
-          >
-            {i}
-          </a>
+          <Link legacyBehavior href={`/${i}`} key={i}>
+            <a
+              key={i}
+              onClick={() => handleClick(i)}
+              className={classNames(
+                "px-3 py-2 rounded-md text-sm font-medium",
+                {
+                  "bg-blue-600 text-white": currentPage === i,
+                  "text-gray-700 hover:bg-gray-100": currentPage !== i,
+                }
+              )}
+            >
+              {i}
+            </a>
+          </Link>
         );
       }
     } else {
@@ -33,19 +36,19 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
       for (let i = startPage; i <= endPage; i++) {
         paginationItems.push(
-          <a
-            key={i}
-            onClick={() => handleClick(i)}
-            className={classNames(
-              'px-3 py-2 rounded-md text-sm font-medium',
-              {
-                'bg-blue-600 text-white': currentPage === i,
-                'text-gray-700 hover:bg-gray-100': currentPage !== i,
-              }
-            )}
-          >
-            {i}
-          </a>
+            <a
+              key={i}
+              onClick={() => handleClick(i)}
+              className={classNames(
+                "px-3 py-2 rounded-md text-sm font-medium",
+                {
+                  "bg-blue-600 text-white": currentPage === i,
+                  "text-gray-700 hover:bg-gray-100": currentPage !== i,
+                }
+              )}
+            >
+              {i}
+            </a>
         );
       }
 
@@ -56,19 +59,19 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           </span>
         );
         paginationItems.push(
-          <a
-            key={totalPages}
-            onClick={() => handleClick(totalPages)}
-            className={classNames(
-              'px-3 py-2 rounded-md text-sm font-medium',
-              {
-                'bg-blue-600 text-white': currentPage === totalPages,
-                'text-gray-700 hover:bg-gray-100': currentPage !== totalPages,
-              }
-            )}
-          >
-            {totalPages}
-          </a>
+            <a
+              key={totalPages}
+              onClick={() => handleClick(totalPages)}
+              className={classNames(
+                "px-3 py-2 rounded-md text-sm font-medium",
+                {
+                  "bg-blue-600 text-white": currentPage === totalPages,
+                  "text-gray-700 hover:bg-gray-100": currentPage !== totalPages,
+                }
+              )}
+            >
+              {totalPages}
+            </a>
         );
       }
     }
@@ -80,37 +83,37 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     <div className="flex justify-center mt-4">
       <nav className="flex" aria-label="Pagination">
         {currentPage !== 1 && (
-          <a
-            onClick={() => handleClick(currentPage - 1)}
-            className={classNames(
-              'px-6 py-2 rounded-md text-sm font-medium',
-              {
-                'bg-blue-600 text-white': currentPage === 1,
-                'text-gray-700 hover:bg-gray-100': currentPage !== 1,
-                'cursor-not-allowed': currentPage === 1,
-              }
-            )}
-            disabled={currentPage === 1}
-          >
-            Prev
-          </a>
+            <a
+              onClick={() => handleClick(currentPage - 1)}
+              className={classNames(
+                "px-6 py-2 rounded-md text-sm font-medium",
+                {
+                  "bg-blue-600 text-white": currentPage === 1,
+                  "text-gray-700 hover:bg-gray-100": currentPage !== 1,
+                  "cursor-not-allowed": currentPage === 1,
+                }
+              )}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </a>
         )}
         {renderPaginationItems()}
         {currentPage !== totalPages && (
-          <a
-            onClick={() => handleClick(currentPage + 1)}
-            className={classNames(
-              'px-3 py-2 rounded-md text-sm font-medium',
-              {
-                'bg-blue-600 text-white': currentPage === totalPages,
-                'text-gray-700 hover:bg-gray-100': currentPage !== totalPages,
-                'cursor-not-allowed': currentPage === totalPages,
-              }
-            )}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </a>
+            <a
+              onClick={() => handleClick(currentPage + 1)}
+              className={classNames(
+                "px-3 py-2 rounded-md text-sm font-medium",
+                {
+                  "bg-blue-600 text-white": currentPage === totalPages,
+                  "text-gray-700 hover:bg-gray-100": currentPage !== totalPages,
+                  "cursor-not-allowed": currentPage === totalPages,
+                }
+              )}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </a>
         )}
       </nav>
     </div>
